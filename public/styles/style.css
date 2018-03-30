@@ -132,7 +132,8 @@ legend, button::-moz-focus-inner, input::-moz-focus-inner {
   box-sizing: border-box; }
 
 body {
-  max-width: 1600px; }
+  max-width: 1600px;
+  width: 100%; }
 
 .wrapper {
   width: 80%;
