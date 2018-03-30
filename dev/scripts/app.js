@@ -250,6 +250,8 @@ class App extends React.Component {
           legend: {
             display: true
           },
+          responsive: true,
+          maintainAspectRatio: false,
           scales: {
             xAxes: [],
             yAxes: [
@@ -277,14 +279,16 @@ class App extends React.Component {
             legend: {
               display: false
             },
+            responsive: true,
+            maintainAspectRatio: false,
             scales: {
               xAxes: [],
               yAxes: [
                 {
                   ticks: {
                     min: 0,
-                    max: 4
-                  }
+                    max: 4,
+                  },
                 }
               ]
             }
@@ -300,7 +304,9 @@ class App extends React.Component {
             title: {
               display: true,
               text: `Season Point Totals`
-            }
+            },
+            responsive: true,
+            maintainAspectRatio: false,
           }} />
         </React.Fragment> )
       }

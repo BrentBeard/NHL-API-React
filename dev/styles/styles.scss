@@ -30,3 +30,12 @@ body {
     width: 75%;
     margin: 20px auto;
 }
+
+@media ( max-width: 750px) {
+    .barBox, .doughnutBox {
+        margin: 0;
+        width: 100%;
+        height: 70vh;
+        position: relative;
+    }
+}
