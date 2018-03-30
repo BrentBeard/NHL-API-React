@@ -1,13 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import {Bar, Doughnut} from 'react-chartjs-2';
 
 class App extends React.Component {
   constructor() {
     super();
     this.state={
       player : "",
-      playerObject: {} 
+      chart: '',
+      playerObject: {},
+      shootingData: {},
+      productionData: {},
+      pointTotals: {},
+      shots60: '',
+      shotPct: '',
+      goals60: '',
+      points60: '',
+      shots60Career: '',
+      shotPctCareer: '',
+      goals60Career: '',
+      points60Career: ''
     };
     this.search = this.search.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -36,28 +49,41 @@ class App extends React.Component {
             }).then((playerList) => {
               const playerObject = playerList.data.people[0];
               if (playerObject.fullName === this.state.player) {
-                this.setState({
-                  playerObject
-                })
-
-                // console.log(playerObject.stats[0].splits[0].season)
-                // console.log(playerObject.stats[0].splits[0].stat);
-                let secondID = this.state.playerObject.id
                 let playerSeason = playerObject.stats[0].splits[0].stat
                 let iceTime = parseInt(playerSeason.timeOnIce)
                 // console.log(iceTime)
-              
-                let perSixty =  (iceTime/60)
+
+                let perSixty = (iceTime / 60)
                 console.log(playerSeason);
                 console.log(perSixty);
-                let shots60 = Math.round((playerSeason.shots / perSixty) *10 ) / 10;
+                let shots60 = Math.round((playerSeason.shots / perSixty) * 10) / 10;
                 console.log(`shots60  ${shots60}`);
                 let shotPct = playerSeason.shotPct;
                 console.log(`sh%  ${shotPct}`);
-                let goals60 = Math.round((playerSeason.goals / perSixty) *10 ) / 10;
+                let goals60 = Math.round((playerSeason.goals / perSixty) * 10) / 10;
                 console.log(`goals60  ${goals60}`);
-                let points60 = Math.round((playerSeason.points / perSixty) *10 ) / 10;
+                let points60 = Math.round((playerSeason.points / perSixty) * 10) / 10;
                 console.log(`points60  ${points60}`)
+                let ppGoals = playerSeason.powerPlayGoals;
+                let ppAssists = playerSeason.powerPlayPoints - ppGoals;
+                let evGoals = playerSeason.goals - ppGoals;
+                let evAssists = playerSeason.assists - ppAssists;
+
+                this.setState({
+                  playerObject,
+                  chart: 'go'
+                  // shots60,
+                  // shotPct,
+                  // goals60,
+                  // points60
+                })
+                console.log({playerObject})
+                // console.log(playerObject.stats[0].splits[0].season)
+                // console.log(playerObject.stats[0].splits[0].stat);
+                
+                let secondID = this.state.playerObject.id
+
+
 
 
             // axios.get(`https://statsapi.web.nhl.com/api/v1/people/${playerID}/?expand=person.stats&stats=gameLog`, {
@@ -113,6 +139,87 @@ class App extends React.Component {
                   console.log(`goals60Career  ${goals60Career}`);
                   let points60Career = Math.round((playerCareer.points / perSixtyCareer) * 10) / 10;
                   console.log(`points60Career  ${points60Career}`)
+
+                  this.setState({
+                    shootingData: {
+                      // labels: [`Shots/60`, `Career Shots/60`, `Sh%`, `Career sh%`],
+                      labels: [`Shots/60 Minutes`, `Sh%`],
+                      // datasets: [
+                      // REGULAR BAR CHART SETUP
+                      //   {
+                      //     data: [shots60, shots60Career, shotPct, shotPctCareer],
+                      //     backgroundColor: [`#FF652F`, `#FFE400`, `#FF652F`, `#FFE400`],
+                      //     borderColor: 'black',
+                      //     borderWidth: 2
+                      //   }
+                      // ]
+                      datasets: [
+                        // GROUPED BAR CHART SET UP
+                        {
+                          label: `This Season`,
+                          backgroundColor: `#FF652F`,
+                          borderColor: 'black',
+                          borderWidth: 2,
+                          data: [shots60, shotPct]
+                        },
+                        {
+                          label: `Career Average`,
+                          backgroundColor: `#FFE400`,
+                          borderColor: 'black',
+                          borderWidth: 2,
+                          data: [shots60Career, shotPctCareer]
+                        }
+                      ]
+                    },
+                    productionData: {
+                      // labels: [`Goals/60`, `Career Goals/60`, `Points/60`, `Career Points/60`],
+                      labels: [`Goals/60 Minutes`, `Points/60 Minutes`],
+                      // datasets: [
+                      //   {
+                      //     data: [goals60, goals60Career, points60, points60Career],
+                      //     backgroundColor: [`#FF652F`, `#FFE400`, `#FF652F`, `#FFE400`],
+                      //     borderColor: 'black',
+                      //     borderWidth: 2
+                      //   }
+                      // ]
+                      datasets: [
+                        // GROUPED BAR CHART SET UP
+                        {
+                          label: `This Season`,
+                          backgroundColor: `#FF652F`,
+                          borderColor: 'black',
+                          borderWidth: 2,
+                          data: [goals60, points60]
+                        },
+                        {
+                          label: `Career Average`,
+                          backgroundColor: `#FFE400`,
+                          borderColor: 'black',
+                          borderWidth: 2,
+                          data: [goals60Career, points60Career]
+                        }
+                      ]
+                    }, 
+                    pointTotals: {
+                      labels: [`PP Goals`, `PP Assists`, `ES Goals`, `ES Assists`],
+                      datasets: [
+                        {
+                          label: `Season Point Totals`,
+                          data: [ppGoals, ppAssists, evGoals, evAssists],
+                          backgroundColor: [`#24305E`, `#374785`, `#F76C6C`, `#FCCD04` ],
+                          borderColor: `black`,
+                          borderWidth: 2
+                        }
+                      ]
+                    }                   
+                  })
+
+                  // this.setState({
+                  //   shots60Career,
+                  //   shotPctCareer,
+                  //   goals60Career,
+                  //   points60Career
+                  // })
                   // let seasons = secondStats.stats[0].splits;
                   // seasons.map((season) => {
                   //   if(season.league.name === `National Hockey League`) {
@@ -130,28 +237,96 @@ class App extends React.Component {
     }) 
   }
 
-  // secondStats() {
-  //   if(this.state.playerObject !== '') {
-  //     let secondID = this.state.playerObject.id
-  //     axios.get(`https://statsapi.web.nhl.com/api/v1/people/${secondID}/?expand=person.stats&stats=yearByYear`, {
-  //     }).then((res) => {
-  //       console.log(res);
-  //     }) 
-  //   } 
-  // } 
 
 
     render() {
+      let ShootingChart;
+      if(this.state.chart !== '') {
+        ShootingChart = ( <React.Fragment><Bar data={this.state.shootingData} options={{
+          title: {
+            display: true,
+            text: `Shooting: Season vs Career`
+          },
+          legend: {
+            display: true
+          },
+          scales: {
+            xAxes: [],
+            yAxes: [
+              {
+                ticks: {
+                  min: 0,
+                  max: 25,
+                }
+              }
+            ]
+          }
+        }} /></React.Fragment> )
+      }
+      else {
+        ShootingChart = (<div></div>)
+      }
+      let ProductionChart;
+      if(this.state.chart !== '') {
+        ProductionChart = ( <React.Fragment>
+          <Bar data={this.state.productionData} options={{
+            title: {
+              display: true,
+              text: `Production: Season vs Career`
+            },
+            legend: {
+              display: false
+            },
+            scales: {
+              xAxes: [],
+              yAxes: [
+                {
+                  ticks: {
+                    min: 0,
+                    max: 4
+                  }
+                }
+              ]
+            }
+          }} />
+        </React.Fragment> )
+      } else {
+        ProductionChart = (<div></div>)
+      }
+      let PointTotals;
+      if(this.state.chart !== '') {
+        PointTotals = ( <React.Fragment>
+          <Doughnut data={this.state.pointTotals} options={{
+            title: {
+              display: true,
+              text: `Season Point Totals`
+            }
+          }} />
+        </React.Fragment> )
+      }
       return (
-        <div>
+        <React.Fragment>
           <form onSubmit={this.search}>
           <label htmlFor="player">Player Name:</label>
             <input type="text" value={this.state.player} id="player" onChange={this.handleChange} />
             <input type="submit"/>
-            <p>{this.state.playerObject.fullName}</p>
-          </form>
-          
-        </div>
+          </form>          
+          <p>{this.state.playerObject.fullName}</p>
+
+
+          <div className="chartContainer">
+            <div className="barBox">
+            {ShootingChart}
+            </div>
+            <div className="barBox">
+            {ProductionChart}
+            </div>
+            <div className="doughnutBox">
+              {PointTotals}
+            </div>
+
+          </div>
+        </React.Fragment>
       )
     }
 }
