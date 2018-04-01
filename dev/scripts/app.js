@@ -9,6 +9,7 @@ class App extends React.Component {
     this.state={
       player : "",
       chart: '',
+      players: [],
       playerObject: {},
       shootingData: {},
       productionData: {},
@@ -37,6 +38,7 @@ class App extends React.Component {
 
   search(e) {
     e.preventDefault();
+    const players = []
     axios.get(`https://statsapi.web.nhl.com/api/v1/teams/`, {
     }).then((res) => {
       const teams = res.data.teams;
@@ -50,6 +52,10 @@ class App extends React.Component {
             axios.get(`https://statsapi.web.nhl.com/api/v1/people/${playerID}/?expand=person.stats&stats=statsSingleSeason`, {
             }).then((playerList) => {
               const playerObject = playerList.data.people[0];
+
+              //MAKE FASTER WITH COMPONENT DID MOUNT, USE PLAYERS ARRAY TO STORE ALL PLAYER OBJECTS ON PAGE LOAD (V2)
+              // players.push(playerObject)
+              console.log(players);
               if (playerObject.fullName === this.state.player) {
                 let playerSeason = playerObject.stats[0].splits[0].stat
                 let iceTime = parseInt(playerSeason.timeOnIce)
@@ -78,7 +84,8 @@ class App extends React.Component {
                   playerObject,
                   chart: 'go',
                   points,
-                  toi
+                  toi,
+                  players
                   // shots60,
                   // shotPct,
                   // goals60,
