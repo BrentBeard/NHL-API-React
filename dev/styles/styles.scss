@@ -14,6 +14,8 @@ h1 {
     color: #217c7e;
     text-align: center;
     font-weight: 700;
+    margin-top: 50px;
+    font-size: 40px;
 }
 
 h2 {
@@ -36,6 +38,7 @@ p {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
 }
 
