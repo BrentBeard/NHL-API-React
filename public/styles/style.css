@@ -168,6 +168,7 @@ p {
 .playerForm {
   margin-top: 20px auto;
   display: flex;
+  flex-wrap: wrap;
   align-items: center; }
   .playerForm label {
     text-transform: none;
@@ -209,7 +210,12 @@ p {
 
 @media (max-width: 750px) {
   .wrapper {
-    width: 95%; }
+    width: 100%;
+    padding: 0 10px; }
+  .playerForm {
+    flex-direction: column; }
+    .playerForm .submit {
+      margin-top: 10px; }
   .barBox, .doughnutBox {
     margin: 0;
     width: 100%;
