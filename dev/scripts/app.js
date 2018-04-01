@@ -325,7 +325,7 @@ class App extends React.Component {
           <h2>Hot or cold? Born this way? Find out, search any active NHL player.</h2>
 
           <form className="playerForm" onSubmit={this.search}>
-          <label htmlFor="player">Player name, spelling is important(for now):</label>
+          <label htmlFor="player">Spelling is important(for now):</label>
             <input className="playerInput" type="text" value={this.state.player} id="player" onChange={this.handleChange} />
             <input className="submit" type="submit"/>
           </form>          

@@ -214,8 +214,8 @@ p {
     padding: 0 10px; }
   .playerForm {
     flex-direction: column; }
-    .playerForm .submit {
-      margin-top: 12px; }
+    .playerForm input {
+      margin-top: 15px; }
   .barBox, .doughnutBox {
     margin: 0;
     width: 100%;
