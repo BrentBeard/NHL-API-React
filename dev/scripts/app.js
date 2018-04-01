@@ -13,6 +13,8 @@ class App extends React.Component {
       shootingData: {},
       productionData: {},
       pointTotals: {},
+      points: '',
+      toi: '',
       shots60: '',
       shotPct: '',
       goals60: '',
@@ -55,23 +57,28 @@ class App extends React.Component {
 
                 let perSixty = (iceTime / 60)
                 console.log(playerSeason);
-                console.log(perSixty);
+                // console.log(perSixty);
                 let shots60 = Math.round((playerSeason.shots / perSixty) * 10) / 10;
-                console.log(`shots60  ${shots60}`);
+                // console.log(`shots60  ${shots60}`);
                 let shotPct = playerSeason.shotPct;
-                console.log(`sh%  ${shotPct}`);
+                // console.log(`sh%  ${shotPct}`);
                 let goals60 = Math.round((playerSeason.goals / perSixty) * 10) / 10;
-                console.log(`goals60  ${goals60}`);
+                // console.log(`goals60  ${goals60}`);
                 let points60 = Math.round((playerSeason.points / perSixty) * 10) / 10;
-                console.log(`points60  ${points60}`)
+                // console.log(`points60  ${points60}`)
                 let ppGoals = playerSeason.powerPlayGoals;
                 let ppAssists = playerSeason.powerPlayPoints - ppGoals;
                 let evGoals = playerSeason.goals - ppGoals;
                 let evAssists = playerSeason.assists - ppAssists;
+                let points = playerSeason.points;
+                let toi = playerSeason.timeOnIcePerGame;
+
 
                 this.setState({
                   playerObject,
-                  chart: 'go'
+                  chart: 'go',
+                  points,
+                  toi
                   // shots60,
                   // shotPct,
                   // goals60,
@@ -143,7 +150,7 @@ class App extends React.Component {
                   this.setState({
                     shootingData: {
                       // labels: [`Shots/60`, `Career Shots/60`, `Sh%`, `Career sh%`],
-                      labels: [`Shots/60 Minutes`, `Sh%`],
+                      labels: [`Shots/60 Mins`, `Sh%`],
                       // datasets: [
                       // REGULAR BAR CHART SETUP
                       //   {
@@ -157,14 +164,14 @@ class App extends React.Component {
                         // GROUPED BAR CHART SET UP
                         {
                           label: `This Season`,
-                          backgroundColor: `#FF652F`,
+                          backgroundColor: `#9a3334`,
                           borderColor: 'black',
                           borderWidth: 2,
                           data: [shots60, shotPct]
                         },
                         {
                           label: `Career Average`,
-                          backgroundColor: `#FFE400`,
+                          backgroundColor: `#217c7e`,
                           borderColor: 'black',
                           borderWidth: 2,
                           data: [shots60Career, shotPctCareer]
@@ -173,7 +180,7 @@ class App extends React.Component {
                     },
                     productionData: {
                       // labels: [`Goals/60`, `Career Goals/60`, `Points/60`, `Career Points/60`],
-                      labels: [`Goals/60 Minutes`, `Points/60 Minutes`],
+                      labels: [`Goals/60 Mins`, `Points/60 Mins`],
                       // datasets: [
                       //   {
                       //     data: [goals60, goals60Career, points60, points60Career],
@@ -186,14 +193,14 @@ class App extends React.Component {
                         // GROUPED BAR CHART SET UP
                         {
                           label: `This Season`,
-                          backgroundColor: `#FF652F`,
+                          backgroundColor: `#9a3334`,
                           borderColor: 'black',
                           borderWidth: 2,
                           data: [goals60, points60]
                         },
                         {
                           label: `Career Average`,
-                          backgroundColor: `#FFE400`,
+                          backgroundColor: `#217c7e`,
                           borderColor: 'black',
                           borderWidth: 2,
                           data: [goals60Career, points60Career]
@@ -300,6 +307,8 @@ class App extends React.Component {
       let PointTotals;
       if(this.state.chart !== '') {
         PointTotals = ( <React.Fragment>
+          <p>{`${this.state.points} Points`}</p>
+          <p>{`Average TOI/Game: ${this.state.toi}`}</p>
           <Doughnut data={this.state.pointTotals} options={{
             title: {
               display: true,
@@ -312,12 +321,15 @@ class App extends React.Component {
       }
       return (
         <React.Fragment>
-          <form onSubmit={this.search}>
-          <label htmlFor="player">Player Name:</label>
-            <input type="text" value={this.state.player} id="player" onChange={this.handleChange} />
-            <input type="submit"/>
+          <h1>Shooting Talent Evaluations</h1>
+          <h2>Hot or cold? Born this way? Find out, search any active NHL player.</h2>
+
+          <form className="playerForm" onSubmit={this.search}>
+          <label htmlFor="player">Player name, spelling is important(for now):</label>
+            <input className="playerInput" type="text" value={this.state.player} id="player" onChange={this.handleChange} />
+            <input className="submit" type="submit"/>
           </form>          
-          <p>{this.state.playerObject.fullName}</p>
+          <p className="playerName">{this.state.playerObject.fullName}</p>
 
 
           <div className="chartContainer">
