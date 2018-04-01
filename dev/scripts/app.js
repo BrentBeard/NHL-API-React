@@ -566,7 +566,7 @@ class App extends React.Component {
           <h2>Hot or cold? Born this way? Find out, search any active NHL player.</h2>
 
           <form className="playerForm" onSubmit={this.search}>
-          <label htmlFor="player">Spelling and grammer are important(for now):</label>
+          <label htmlFor="player">Spelling and grammer are important(for now), for most impressive results search Auston Matthews:</label>
             <input className="playerInput" type="text" value={this.state.player} id="player" onChange={this.handleChange} />
             {/* <select name="" id="player">
             {this.state.players.map((player) =>{

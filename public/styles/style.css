@@ -168,6 +168,7 @@ p {
 .playerForm {
   margin-top: 20px auto;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   align-items: center; }
   .playerForm label {
@@ -189,7 +190,9 @@ p {
     margin: 0 10px;
     font-family: 'Open Sans' sans-serif;
     color: #9a3334;
-    padding: 5px 10px; }
+    padding: 5px 10px;
+    margin: 10px 0;
+    text-align: center; }
 
 .chartContainer {
   display: flex;
