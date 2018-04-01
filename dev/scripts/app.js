@@ -213,7 +213,7 @@ class App extends React.Component {
                         {
                           label: `Season Point Totals`,
                           data: [ppGoals, ppAssists, evGoals, evAssists],
-                          backgroundColor: [`#24305E`, `#374785`, `#F76C6C`, `#FCCD04` ],
+                          backgroundColor: [`#FF8C1E`, ` rgb(149, 210, 87)`, `#1E90ff`, `#FF1D90` ],
                           borderColor: `black`,
                           borderWidth: 2
                         }

@@ -134,7 +134,7 @@ legend, button::-moz-focus-inner, input::-moz-focus-inner {
 body {
   max-width: 1600px;
   width: 100%;
-  background: linear-gradient(to right, dodgerblue, white);
+  background: linear-gradient(to left, dodgerblue, white);
   text-transform: uppercase;
   font-family: 'Open Sans', sans-serif; }
 
