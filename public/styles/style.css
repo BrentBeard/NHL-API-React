@@ -196,7 +196,8 @@ p {
     color: #9a3334;
     padding: 5px 10px;
     margin: 10px 0;
-    text-align: center; }
+    text-align: center;
+    text-transform: capitalize; }
 
 .chartContainer {
   display: flex;
