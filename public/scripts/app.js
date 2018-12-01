@@ -613,7 +613,7 @@ var App = function (_React$Component) {
           _react2.default.createElement(
             'label',
             { htmlFor: 'player' },
-            'Spelling and grammer are important(for now), for most impressive results search Auston Matthews:'
+            'Spelling and grammar are important(for now), for most impressive results search Auston Matthews:'
           ),
           _react2.default.createElement('input', { className: 'playerInput', autoCapitalize: 'words', type: 'text', value: this.state.player, id: 'player', onChange: this.handleChange }),
           _react2.default.createElement('input', { className: 'submit', type: 'submit' })
